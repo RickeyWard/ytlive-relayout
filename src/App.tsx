@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 function App() {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [urlBox, setUrlBox] = useState("https://www.youtube.com/watch?v=jfKfPfyJRdk");
+  const [urlBox, setUrlBox] = useState("");
   
   const urlParams = new URLSearchParams(window.location.search);
   const vId = urlParams.get('v');
@@ -45,8 +45,18 @@ function App() {
       </> : <div className="justify-self-center self-center mx-auto w-1/3">
         <h1 className="text-gray-200 pb-1 font-bold">Enter URL or video ID for Youtube Live Video</h1>
         <div className="flex">
-          <input ref={inputRef} className="flex-grow p-2 text-lg text-gray-200 rounded border outline-none border-gray-600 bg-gray-800 focus:border-gray-200 placeholder:text-gray-600" placeholder="https://www.youtube.com/watch?v=aBcDeFG" value={urlBox} onChange={e=>setUrlBox(e.target.value)} />
-          <button className="ml-1.5 px-4 font-bold text-gray-200 rounded border outline-none border-gray-600 bg-gray-800 focus:border-gray-200 placeholder:text-gray-600 transition-colors hover:bg-slate-600" onClick={()=>{
+          <input ref={inputRef} className="flex-grow p-2 text-lg text-gray-200 rounded border outline-none border-gray-600 bg-gray-800 focus:border-gray-200 placeholder:text-gray-600" placeholder="https://www.youtube.com/watch?v=aBcDeFG" value={urlBox} onChange={e=>setUrlBox(e.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                // this is gross/lazy and I am ashamed, but it's easy and will always work.
+                const watchButton = document.getElementById("dd-watch-button");
+                watchButton && watchButton.click();
+              }
+            }
+          }
+          />
+          <button id="dd-watch-button" className="ml-1.5 px-4 font-bold text-gray-200 rounded border outline-none border-gray-600 bg-gray-800 focus:border-gray-200 placeholder:text-gray-600 transition-colors hover:bg-slate-600" onClick={()=>{
             if(urlBox) {
               const regex = /^(?:(?:https:\/\/www\.youtube\.com\/watch\?v=(?<vid>[\w-]+))|(?<vid2>[\w-]+))$/;
               let m;
@@ -70,10 +80,10 @@ function App() {
         <div className="pt-12">
           <h3 className="text-lg text-gray-400 font-bold">What is this?</h3>
           <p className="pt-2 text-gray-500">
-            YouTube's desktop layout is a bit too busy for me. The main thing I like about twitch is that its just a video and chat and mostly nothing else. Forunately youtube is designed to be embeded in other sites and using the magic of Iframes I can just make some boxes and stick youtube video/livechat into those.
+            YouTube's desktop layout is a bit too busy for me. The main thing I like about twitch is that it's just a video and chat and mostly nothing else. Forunately youtube is designed to be embeded in other sites and using the magic of Iframes I can just make some boxes and stick youtube video/livechat into those.
           </p>
           <p className="pt-2 text-gray-500">
-            Nothing fancy going on here, I don't collect your information or even know if you're using this, its completely browser side and I don't care if you use it or not. It's really just for me.
+            Nothing fancy going on here, I don't collect your information or even know if you're using this, it's completely browser side and I don't care if you use it or not. It's really just for me.
           </p>
           <p className="pt-2 text-gray-500">
             The code open and avaiable, if you have any issues or suggestions feel free to open an "issue" on github.
