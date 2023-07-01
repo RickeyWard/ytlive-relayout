@@ -15,13 +15,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
-      env:
-        FTPPASSWORD: ${{ secrets.FTPPASSWORD }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Install Deps, Build and deploy
+      env:
+        FTPPASSWORD: ${{ secrets.FTPPASSWORD }}
       run: |
         npm install
         npm run build
