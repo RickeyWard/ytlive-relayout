@@ -1,8 +1,6 @@
 var FtpDeploy = require("ftp-deploy");
 var ftpDeploy = new FtpDeploy();
 
-console.log("testing: " + process.env.FTPPASSWORD);
-
 var config = {
     user: "githubdeploy",
     host: "www.diamonddrake.com",
