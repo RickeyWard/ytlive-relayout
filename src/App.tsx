@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 function App() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [urlBox, setUrlBox] = useState("");
+  const [showChat, setShowChat] = useState(true);
   
   const urlParams = new URLSearchParams(window.location.search);
   const vId = urlParams.get('v');
@@ -24,7 +25,7 @@ function App() {
   },[]);
 
   return (
-    <div className="App bg-zinc-900 h-full flex">
+    <div className="App bg-zinc-900 h-full flex overflow-hidden">
       {vId ? <>
       <div className="w-100 h-100 flex-grow">
         <iframe width="100%" height="100%"
@@ -34,7 +35,13 @@ function App() {
           allowFullScreen
         />
       </div>
-      <div className="w-96">
+      <div className={ (showChat ? "w-96" : "w-0") + " flex flex-col overflow-hidden"}>
+        <div className="ytlive-controls font-semibold tracking-wide uppercase flex items-center justify-between h-8 px-2 text-sm">
+          <button type="button" className="rounded-md px-1" onClick={e=>{e.preventDefault(); setShowChat(false);}}>
+            <svg version="1.1" viewBox="0 0 20 20" x="0px" y="0px" aria-hidden="true" focusable="false" fill="currentColor" className="w-6 h-6"><g><path d="M4 16V4H2v12h2zM13 15l-1.5-1.5L14 11H6V9h8l-2.5-2.5L13 5l5 5-5 5z"></path></g></svg>
+          </button>
+          <a href="/ytlive" className="hover:underline">Diamonddrake.com/ytlive</a>
+        </div>
         <iframe className="w-full h-full"
           src={`https://www.youtube.com/live_chat?v=${vId}&embed_domain=${window.location.hostname}`}
           title="chat" frameBorder="0"
@@ -42,6 +49,9 @@ function App() {
           allowFullScreen
         />
       </div>
+      { !showChat && <button type="button" className="absolute top-0 right-0 p-1 ytlive-controls__button" onClick={e=>{e.preventDefault(); setShowChat(true);}}>
+        <svg width="100%" height="100%" version="1.1" viewBox="0 0 20 20" x="0px" y="0px" aria-hidden="true" focusable="false" fill="currentColor" className="w-6 h-6"><g><path d="M16 16V4h2v12h-2zM6 9l2.501-2.5-1.5-1.5-5 5 5 5 1.5-1.5-2.5-2.5h8V9H6z"></path></g></svg>
+      </button>}
       </> : <div className="justify-self-center self-center mx-auto w-1/3">
         <h1 className="text-gray-200 pb-1 font-bold">Enter URL or video ID for Youtube Live Video</h1>
         <div className="flex">

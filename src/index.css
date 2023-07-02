@@ -3,26 +3,61 @@
 @tailwind utilities;
 
 .doShake {
-    animation: shake 0.45s linear;
+  animation: shake 0.45s linear;
 }
 
 @keyframes shake {
-    8%,
-    41% {
-      transform: translateX(-7px);
-    }
-    25%,
-    58% {
-      transform: translateX(7px);
-    }
-    75% {
-      transform: translateX(-4px);
-    }
-    92% {
-      transform: translateX(4px);
-    }
-    0%,
-    100% {
-      transform: translateX(0);
-    }
+
+  8%,
+  41% {
+    transform: translateX(-7px);
   }
+
+  25%,
+  58% {
+    transform: translateX(7px);
+  }
+
+  75% {
+    transform: translateX(-4px);
+  }
+
+  92% {
+    transform: translateX(4px);
+  }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.ytlive-controls {
+  background: #fff;
+  border-bottom: 1px solid hsla(0, 0%, 53.3%, 0.2);
+  color: hsla(0, 0%, 39%, 0.418);
+}
+
+.ytlive-controls button:hover {
+  background-color: hsla(0, 0%, 51%, 0.418);
+}
+
+.ytlive-controls__button {
+  color: hsla(0, 0%, 85%, 0.418);
+}
+
+@media (prefers-color-scheme: dark) {
+  .ytlive-controls {
+    background: rgb(15, 15, 15);
+    border-bottom: 1px solid hsla(0, 0%, 31%, 0.418);
+    color:hsla(0, 0%, 54%, 0.418)
+  }
+
+  .ytlive-controls__button {
+    color: hsla(0, 0%, 54%, 0.418);
+  }
+
+  .ytlive-controls button:hover {
+    background-color: hsla(0, 0%, 35%, 0.418);
+  }
+}
